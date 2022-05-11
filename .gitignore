@@ -1,23 +1,1023 @@
-# Compiled class file
-*.class
+import java.security.SecureRandom;
+import java.util.Scanner;
 
-# Log file
-*.log
+public class WheelOfFortune {
+    public static void main(String[] args) {
+        boolean condition = false;
+        boolean condition2 = false;
+        boolean condition3 = false;
+        boolean condition4 = false;
+        String player = " ";
+        int currentPlayer = 1;
+        String choice = " ";
+        int spin = 0;
+        int value = 0;
+        int totalMoney = 0;
+        int moneyEarned = 0;
+        String[] wheelsDisplay = {"LostATurn", "600", "400", "300", "800", "350", "450", "700", "300", "600",
+                "5000", "300", "600", "300", "500", "800", "550", "400", "300", "900", "500", "900", "BANKRUPT"};
+        int[] wheels = {600, 400, 300, 800, 350, 450, 700, 300, 600, 5000, 300, 600, 300, 500, 800, 550, 400, 300, 900, 500, 900};
+        int[] playerScore = {0, 0, 0};
+        int[] playerScore1 = {0, 0, 0};
+        int[] playerScore2 = {0, 0, 0};
+        int[] playerScore3 = {0, 0, 0};
+        int[] playerScore4 = {0, 0, 0};
+        String puzzleGuess;
+        String letterSelection;
+        String[] availableLetters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        String[] availableLetters2 = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        String[] availableLetters3 = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        String[] availableLetters4 = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
-# BlueJ files
-*.ctxt
+        String[] personText = {"T", "O", "M", " ", "B", "R", "A", "D", "Y", " ", "I", "S", " ", "T", "H", "E", " ", "G", "O", "A", "T"};
+        String[] personPuzzle = {"*", "*", "*", " ", "*", "*", "*", "*", "*", " ", "*", "*", " ", "*", "*", "*", " ", "*", "*", "*", "*"};
+        String person = "TOM BRADY IS THE GOAT";
+        String[] placeText = {"T", "H", "E", " ", "C", "I", "T", "Y", " ", "O", "F", " ", "B", "R", "O", "T", "H", "E", "R", "L", "Y", " ", "L", "O", "V", "E"};
+        String[] placePuzzle = {"*", "*", "*", " ", "*", "*", "*", "*", " ", "*", "*", " ", "*", "*", "*", "*", "*", "*", "*", "*", "*", " ", "*", "*", "*", "*"};
+        String place = "THE CITY OF BROTHERLY LOVE";
+        String[] thingText = {"E", "V", "E", "R", "Y", "O", "N", "E", " ", "L", "O", "V", "E", "S", " ", "P", "R", "O", "G", "R", "A", "M", "I", "N", "G"};
+        String[] thingPuzzle = {"*", "*", "*", "*", "*", "*", "*", "*", " ", "*", "*", "*", "*", "*", " ", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*"};
+        String thing = "EVERYONE LOVES PROGRAMING";
+        String[] quoteText = {"H", "O", "N", "E", "S", "T", "Y", " ", "I", "S", " ", "T", "H", "E", " ", "B", "E", "S", "T", " ", "P", "O", "L", "I", "C", "Y"};
+        String[] quotePuzzle = {"*", "*", "*", "*", "*", "*", "*", " ", "*", "*", " ", "*", "*", "*", " ", "*", "*", "*", "*", " ", "*", "*", "*", "*", "*", "*"};
+        String quote = "HONESTY IS THE BEST POLICY";
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+        Scanner scan = new Scanner(System.in);
+        SecureRandom random = new SecureRandom();
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+        System.out.println("First Player name: ");
+        String player1 = scan.next().toUpperCase();
+        System.out.println("Second Player name: ");
+        String player2 = scan.next().toUpperCase();
+        System.out.println("Third Player name: ");
+        String player3 = scan.next().toUpperCase();
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+        System.out.println("\nEach Player has (Grand Bank):"); // prompt for the names of 3 players and display them above their banks
+        for (int i = 0; i < 3; i++) {
+            if( i == 0){
+                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore[i]);
+            }
+            if( i == 1){
+                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore[i]);
+            }
+            if( i == 2){
+                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore[i]);
+            }
+        }
+        while (!condition) {
+            System.out.print("\nAvailable letters - \n"); // Valid & Entries Character
+            for (String availableLetter : availableLetters) {
+                System.out.print(availableLetter);
+            }
+            System.out.print("\n\nHere is the puzzle (Person) :\n"); // Game Start up
+
+            // puzzle phrase being obscured
+            for (String s : personPuzzle) {
+                System.out.print(s);
+                System.out.print(" ");
+            }
+            System.out.print("\n\nWheel Options:\n");
+            for (String wheel : wheelsDisplay) {
+                System.out.print(wheel + " ");
+            }
+            System.out.println("\n\nPlayer " + currentPlayer + ": would you like to Spin (S) or Guess (G) the puzzle or buy a (V) Vowel? ");
+
+            boolean invalidEntries = true;
+            while (invalidEntries) {
+                choice = scan.next().toUpperCase();
+                if (choice.equals("S") || choice.equals("G") || choice.equals("V")) {
+                    invalidEntries = false;
+                } else {
+                    System.out.println("Invalid Choice! Enter Spin (S), Guess (G) or buy a (V) Vowel");
+                }
+            }
+            // Wheel Value
+            if (choice.equals("S")) {
+                int letterMatch = 0;
+                spin = random.nextInt(22);
+                spin = spin + 1;
+                if (spin > 0 && spin <= 21) {
+                    value = wheels[(spin - 1)];
+                    System.out.println("You landed on $" + value + ".");
+                    System.out.println("Select your letter from the available letters from above: ");
+                    letterSelection = scan.nextLine().toUpperCase();
+                    letterSelection = scan.nextLine().toUpperCase();
+
+                    // Available letters
+                    for (int i=0; i < availableLetters.length; i++){
+                        if (letterSelection.equalsIgnoreCase(availableLetters[i])){
+                            availableLetters[i] = "_";
+                        }
+                    }
+                    // Clear Text
+                    for (int i = 0; i < personText.length; i++) {
+                        if (letterSelection.equalsIgnoreCase(personText[i])) {
+                            letterMatch++;
+                            personPuzzle[i] = personText[i];
+                        }
+                    }
+                    if (letterMatch > 0) {
+                        System.out.println("There is/are " + letterMatch + " " + letterSelection + "'s in the puzzle.");
+                        moneyEarned = letterMatch * value;
+                        totalMoney = moneyEarned + playerScore1[(currentPlayer - 1)];
+                        playerScore1[(currentPlayer - 1)] = totalMoney;
+                        System.out.println("You earned $" + moneyEarned);
+
+                        System.out.println("\nEach Player has (Round 1):");
+                        for (int i = 0; i < 3; i++) {
+                            if( i == 0){
+                                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore1[i]);
+                            }
+                            if( i == 1){
+                                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore1[i]);
+                            }
+                            if( i == 2){
+                                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore1[i]);
+                            }
+                        }
+                        pause();
+                    }
+                    if (letterMatch == 0) {
+                        System.out.println("There are no " + letterSelection + "'s in the puzzle.");
+                        currentPlayer = changePlayer(currentPlayer);
+
+                        System.out.println("\nEach Player has (Round 1):");
+                        for (int i = 0; i < 3; i++) {
+                            if( i == 0){
+                                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore1[i]);
+                            }
+                            if( i == 1){
+                                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore1[i]);
+                            }
+                            if( i == 2){
+                                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore1[i]);
+                            }
+                        }
+                        pause();
+                    }
+                }
+                if (spin == 22) {
+                    System.out.println("You went bankrupt!");
+                    playerScore1[(currentPlayer - 1)] = 0;
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 1):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore1[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore1[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore1[i]);
+                        }
+                    }
+                    pause();
+                }
+                if (spin == 0) {
+                    System.out.println("You lose a turn!");
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 1):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore1[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore1[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore1[i]);
+                        }
+                    }
+                    pause();
+                }
+            }
+            if (choice.equals("V")) {
+                if (playerScore1[currentPlayer - 1] < 100) {
+                    System.out.println("Not enough Money");
+                    pause();
+                } else {
+                    int letterMatch = 0;
+                    System.out.println(" Please type a vowel: ");
+                    letterSelection = scan.nextLine().toUpperCase();
+                    letterSelection = scan.nextLine().toUpperCase();
+
+                    if (letterSelection.equals("A") || letterSelection.equals("E") || letterSelection.equals("I") || letterSelection.equals("O") || letterSelection.equals("U")) {
+
+                        for (int i=0; i < availableLetters.length; i++){
+                            if (letterSelection.equalsIgnoreCase(availableLetters[i])){
+                                availableLetters[i] = "_";
+                            }
+                        }
+
+                        for (int i = 0; i < personText.length; i++) {
+                            if (letterSelection.equalsIgnoreCase(personText[i])) {
+                                letterMatch++;
+                                personPuzzle[i] = personText[i];
+                            }
+                        }
+                        if (letterMatch > 0) {
+                            System.out.println("There is/are " + letterMatch + " " + letterSelection + "'s in the puzzle.");
+                            moneyEarned = moneyEarned - 100;
+                            totalMoney = moneyEarned;
+                            playerScore1[(currentPlayer - 1)] = totalMoney;
+                            System.out.println("You have $" + moneyEarned);
+
+                            System.out.println("\nEach Player has (Round 1):");
+                            for (int i = 0; i < 3; i++) {
+                                if( i == 0){
+                                    System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore1[i]);
+                                }
+                                if( i == 1){
+                                    System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore1[i]);
+                                }
+                                if( i == 2){
+                                    System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore1[i]);
+                                }
+                            }
+                            pause();
+                        }
+                        if (letterMatch == 0) {
+                            System.out.println("There are no " + letterSelection + "'s in the puzzle.");
+                            currentPlayer = changePlayer(currentPlayer);
+
+                            System.out.println("\nEach Player has (Round 1):");
+                            for (int i = 0; i < 3; i++) {
+                                if( i == 0){
+                                    System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore1[i]);
+                                }
+                                if( i == 1){
+                                    System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore1[i]);
+                                }
+                                if( i == 2){
+                                    System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore1[i]);
+                                }
+                            }
+                            pause();
+                        }
+                    } else {
+                        System.out.println(letterSelection + "'s not a Vowel");
+                    }
+                }
+            }
+            if (choice.equals("G")) {
+                System.out.println("Enter your guess: ");
+                puzzleGuess = scan.nextLine().toUpperCase();
+                puzzleGuess = scan.nextLine().toUpperCase();
+
+                if (puzzleGuess.equalsIgnoreCase(person)) {
+                    System.out.println("Congratulations, Player " + currentPlayer + " have won $" + totalMoney + "!");
+                    condition = true;
+                } else {
+                    System.out.println("I'm sorry, that is not correct.");
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 1):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore1[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore1[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore1[i]);
+                        }
+                    }
+                    pause();
+                }
+            }
+        }
+        System.out.println("\nEach Player has (Grand Bank):");
+        for (int i = 0; i < 3; i++) {
+            playerScore[i] += playerScore1[i];
+            if( i == 0){
+                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore[i]);
+            }
+            if( i == 1){
+                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore[i]);
+            }
+            if( i == 2){
+                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore[i]);
+            }
+        }
+        currentPlayer = changePlayer(currentPlayer);
+
+        while (!condition2) {
+            System.out.print("\nAvailable letters - \n"); // Valid & Entries Character
+            for (String availableLetter : availableLetters2) {
+                System.out.print(availableLetter);
+            }
+            System.out.print("\n\nHere is the puzzle (Place) :\n"); // Game Start up
+
+            // puzzle phrase being obscured
+            for (String s : placePuzzle) {
+                System.out.print(s);
+                System.out.print(" ");
+            }
+            System.out.print("\n\nWheel Options:\n");
+            for (String wheel : wheelsDisplay) {
+                System.out.print(wheel + " ");
+            }
+            System.out.println("\n\nPlayer " + currentPlayer + ": would you like to Spin (S) or Guess (G) the puzzle or buy a (V) Vowel? ");
+
+            boolean invalidEntries = true;
+            while (invalidEntries) {
+                choice = scan.next().toUpperCase();
+                if (choice.equals("S") || choice.equals("G") || choice.equals("V")) {
+                    invalidEntries = false;
+                } else {
+                    System.out.println("Invalid Choice! Enter Spin (S), Guess (G) or buy a (V) Vowel");
+                }
+            }
+            // Wheel Value
+            if (choice.equals("S")) {
+                int letterMatch = 0;
+                spin = random.nextInt(22);
+                spin = spin + 1;
+                if (spin > 0 && spin <= 21) {
+                    value = wheels[(spin - 1)];
+                    System.out.println("You landed on $" + value + ".");
+                    System.out.println("Select your letter from the available letters from above: ");
+                    letterSelection = scan.nextLine().toUpperCase();
+                    letterSelection = scan.nextLine().toUpperCase();
+
+                    for (int i=0; i < availableLetters2.length; i++){
+                        if (letterSelection.equalsIgnoreCase(availableLetters2[i])){
+                            availableLetters2[i] = "_";
+                        }
+                    }
+                    // Clear Text
+                    for (int i = 0; i < placeText.length; i++) {
+                        if (letterSelection.equalsIgnoreCase(placeText[i])) {
+                            letterMatch++;
+                            placePuzzle[i] = placeText[i];
+                        }
+                    }
+                    if (letterMatch > 0) {
+                        System.out.println("There is/are " + letterMatch + " " + letterSelection + "'s in the puzzle.");
+                        moneyEarned = letterMatch * value;
+                        totalMoney = moneyEarned + playerScore2[(currentPlayer - 1)];
+                        playerScore2[(currentPlayer - 1)] = totalMoney;
+                        System.out.println("You earned $" + moneyEarned);
+
+                        System.out.println("\nEach Player has (Round 2):");
+                        for (int i = 0; i < 3; i++) {
+                            if( i == 0){
+                                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore2[i]);
+                            }
+                            if( i == 1){
+                                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore2[i]);
+                            }
+                            if( i == 2){
+                                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore2[i]);
+                            }
+                        }
+                        pause();
+                    }
+                    if (letterMatch == 0) {
+                        System.out.println("There are no " + letterSelection + "'s in the puzzle.");
+                        currentPlayer = changePlayer(currentPlayer);
+
+                        System.out.println("\nEach Player has (Round 2):");
+                        for (int i = 0; i < 3; i++) {
+                            if( i == 0){
+                                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore2[i]);
+                            }
+                            if( i == 1){
+                                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore2[i]);
+                            }
+                            if( i == 2){
+                                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore2[i]);
+                            }
+                        }
+                        pause();
+                    }
+                }
+                if (spin == 22) {
+                    System.out.println("You went bankrupt!");
+                    playerScore2[(currentPlayer - 1)] = 0;
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 2):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore2[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore2[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore2[i]);
+                        }
+                    }
+                    pause();
+                }
+                if (spin == 0) {
+                    System.out.println("You lose a turn!");
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 2):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore2[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore2[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore2[i]);
+                        }
+                    }
+                    pause();
+                }
+            }
+            if (choice.equals("V")) {
+                if (playerScore2[currentPlayer - 1] < 100) {
+                    System.out.println("Not enough Money");
+                    pause();
+                } else {
+                    int letterMatch = 0;
+                    System.out.println(" Please type a vowel: ");
+                    letterSelection = scan.nextLine().toUpperCase();
+                    letterSelection = scan.nextLine().toUpperCase();
+
+                    if (letterSelection.equals("A") || letterSelection.equals("E") || letterSelection.equals("I") || letterSelection.equals("O") || letterSelection.equals("U")) {
+
+                        for (int i=0; i < availableLetters.length; i++){
+                            if (letterSelection.equalsIgnoreCase(availableLetters[i])){
+                                availableLetters[i] = "_";
+                            }
+                        }
+
+                        for (int i = 0; i < placeText.length; i++) {
+                            if (letterSelection.equalsIgnoreCase(placeText[i])) {
+                                letterMatch++;
+                                placePuzzle[i] = placeText[i];
+                            }
+                        }
+                        if (letterMatch > 0) {
+                            System.out.println("There is/are " + letterMatch + " " + letterSelection + "'s in the puzzle.");
+                            moneyEarned = moneyEarned - 100;
+                            totalMoney = moneyEarned;
+                            playerScore2[(currentPlayer - 1)] = totalMoney;
+                            System.out.println("You have $" + moneyEarned);
+
+                            System.out.println("\nEach Player has (Round 2):");
+                            for (int i = 0; i < 3; i++) {
+                                if( i == 0){
+                                    System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore2[i]);
+                                }
+                                if( i == 1){
+                                    System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore2[i]);
+                                }
+                                if( i == 2){
+                                    System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore2[i]);
+                                }
+                            }
+                            pause();
+                        }
+                        if (letterMatch == 0) {
+                            System.out.println("There are no " + letterSelection + "'s in the puzzle.");
+                            currentPlayer = changePlayer(currentPlayer);
+
+                            System.out.println("\nEach Player has (Round 2):");
+                            for (int i = 0; i < 3; i++) {
+                                if( i == 0){
+                                    System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore2[i]);
+                                }
+                                if( i == 1){
+                                    System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore2[i]);
+                                }
+                                if( i == 2){
+                                    System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore2[i]);
+                                }
+                            }
+                            pause();
+                        }
+                    } else {
+                        System.out.println(letterSelection + "'s not a Vowel");
+                    }
+                }
+            }
+            if (choice.equals("G")) {
+                System.out.println("Enter your guess: ");
+                puzzleGuess = scan.nextLine().toUpperCase();
+                puzzleGuess = scan.nextLine().toUpperCase();
+
+                if (puzzleGuess.equalsIgnoreCase(place)) {
+                    System.out.println("Congratulations, Player " + currentPlayer + " have won $" + totalMoney + "!");
+                    condition2 = true;
+                } else {
+                    System.out.println("I'm sorry, that is not correct.");
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 2):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore2[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore2[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore2[i]);
+                        }
+                    }
+                    pause();
+                }
+            }
+        }
+        System.out.println("\nEach Player has (Grand Bank):");
+
+        for (int i = 0; i < 3; i++) {
+            playerScore[i] += playerScore2[i];
+            if( i == 0){
+                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore[i]);
+            }
+            if( i == 1){
+                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore[i]);
+            }
+            if( i == 2){
+                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore[i]);
+            }
+        }
+        currentPlayer = changePlayer(currentPlayer);
+
+        while (!condition3) {
+            System.out.print("\nAvailable letters - \n"); // Valid & Entries Character
+            for (String availableLetter : availableLetters3) {
+                System.out.print(availableLetter);
+            }
+            System.out.print("\n\nHere is the puzzle (Thing) :\n"); // Game Start up
+            // puzzle phrase being obscured
+            for (String s : thingPuzzle) {
+                System.out.print(s);
+                System.out.print(" ");
+            }
+            System.out.print("\n\nWheel Options:\n");
+            for (String wheel : wheelsDisplay) {
+                System.out.print(wheel + " ");
+            }
+            System.out.println("\n\nPlayer " + currentPlayer + ": would you like to Spin (S) or Guess (G) the puzzle or buy a (V) Vowel?");
+
+            boolean invalidEntries = true;
+            while (invalidEntries) {
+                choice = scan.next().toUpperCase();
+                if (choice.equals("S") || choice.equals("G") || choice.equals("V")) {
+                    invalidEntries = false;
+                } else {
+                    System.out.println("Invalid Choice! Enter Spin (S), Guess (G) or buy a (V) Vowel");
+                }
+            }
+            // Wheel Value
+            if (choice.equals("S")) {
+                int letterMatch = 0;
+                spin = random.nextInt(22);
+                spin = spin + 1;
+                if (spin > 0 && spin <= 21) {
+                    value = wheels[(spin - 1)];
+                    System.out.println("You landed on $" + value + ".");
+                    System.out.println("Select your letter from the available letters from above: ");
+                    letterSelection = scan.nextLine().toUpperCase();
+                    letterSelection = scan.nextLine().toUpperCase();
+
+                    for (int i=0; i < availableLetters3.length; i++){
+                        if (letterSelection.equalsIgnoreCase(availableLetters3[i])){
+                            availableLetters3[i] = "_";
+                        }
+                    }
+                    // Clear Text
+                    for (int i = 0; i < thingText.length; i++) {
+                        if (letterSelection.equalsIgnoreCase(thingText[i])) {
+                            letterMatch++;
+                            thingPuzzle[i] = thingText[i];
+                        }
+                    }
+                    if (letterMatch > 0) {
+                        System.out.println("There is/are " + letterMatch + " " + letterSelection + "'s in the puzzle.");
+                        moneyEarned = letterMatch * value;
+                        totalMoney = moneyEarned + playerScore3[(currentPlayer - 1)];
+                        playerScore3[(currentPlayer - 1)] = totalMoney;
+                        System.out.println("You earned $" + moneyEarned);
+
+                        System.out.println("\nEach Player has (Round 3):");
+                        for (int i = 0; i < 3; i++) {
+                            if( i == 0){
+                                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore3[i]);
+                            }
+                            if( i == 1){
+                                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore3[i]);
+                            }
+                            if( i == 2){
+                                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore3[i]);
+                            }
+                        }
+                        pause();
+                    }
+                    if (letterMatch == 0) {
+                        System.out.println("There are no " + letterSelection + "'s in the puzzle.");
+                        currentPlayer = changePlayer(currentPlayer);
+
+                        System.out.println("\nEach Player has (Round 3):");
+                        for (int i = 0; i < 3; i++) {
+                            if( i == 0){
+                                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore3[i]);
+                            }
+                            if( i == 1){
+                                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore3[i]);
+                            }
+                            if( i == 2){
+                                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore3[i]);
+                            }
+                        }
+                        pause();
+                    }
+                }
+                if (spin == 22) {
+                    System.out.println("You went bankrupt!");
+                    playerScore3[(currentPlayer - 1)] = 0;
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 3):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore3[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore3[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore3[i]);
+                        }
+                    }
+                    pause();
+                }
+                if (spin == 0) {
+                    System.out.println("You lose a turn!");
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 3):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore3[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore3[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore3[i]);
+                        }
+                    }
+                    pause();
+                }
+            }
+            if (choice.equals("V")) {
+                if (playerScore3[currentPlayer - 1] < 100) {
+                    System.out.println("Not enough Money");
+                    pause();
+                } else {
+                    int letterMatch = 0;
+                    System.out.println(" Please type a vowel: ");
+                    letterSelection = scan.nextLine().toUpperCase();
+                    letterSelection = scan.nextLine().toUpperCase();
+
+                    if (letterSelection.equals("A") || letterSelection.equals("E") || letterSelection.equals("I") || letterSelection.equals("O") || letterSelection.equals("U")) {
+
+                        for (int i=0; i < availableLetters3.length; i++){
+                            if (letterSelection.equalsIgnoreCase(availableLetters3[i])){
+                                availableLetters3[i] = "_";
+                            }
+                        }
+
+                        for (int i = 0; i < thingText.length; i++) {
+                            if (letterSelection.equalsIgnoreCase(thingText[i])) {
+                                letterMatch++;
+                                thingPuzzle[i] = thingText[i];
+                            }
+                        }
+                        if (letterMatch > 0) {
+                            System.out.println("There is/are " + letterMatch + " " + letterSelection + "'s in the puzzle.");
+                            moneyEarned = moneyEarned - 100;
+                            totalMoney = moneyEarned;
+                            playerScore3[(currentPlayer - 1)] = totalMoney;
+                            System.out.println("You have $" + moneyEarned);
+
+                            System.out.println("\nEach Player has (Round 3):");
+                            for (int i = 0; i < 3; i++) {
+                                System.out.println("Player " + (i + 1) + ": $" + playerScore3[i]);
+                            }
+                            pause();
+                        }
+                        if (letterMatch == 0) {
+                            System.out.println("There are no " + letterSelection + "'s in the puzzle.");
+                            currentPlayer = changePlayer(currentPlayer);
+
+                            for (int i = 0; i < 3; i++) {
+                                if( i == 0){
+                                    System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore3[i]);
+                                }
+                                if( i == 1){
+                                    System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore3[i]);
+                                }
+                                if( i == 2){
+                                    System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore3[i]);
+                                }
+                            }
+                            pause();
+                        }
+                    } else {
+                        System.out.println(letterSelection + "'s not a Vowel");
+                    }
+                }
+            }
+            if (choice.equals("G")) {
+                System.out.println("Enter your guess: ");
+                puzzleGuess = scan.nextLine().toUpperCase();
+                puzzleGuess = scan.nextLine().toUpperCase();
+
+                if (puzzleGuess.equalsIgnoreCase(thing)) {
+                    System.out.println("Congratulations, Player " + currentPlayer + " have won $" + totalMoney + "!");
+                    condition3 = true;
+                } else {
+                    System.out.println("I'm sorry, that is not correct.");
+                    currentPlayer = changePlayer(currentPlayer);
+
+                    System.out.println("\nEach Player has (Round 3):");
+                    for (int i = 0; i < 3; i++) {
+                        if( i == 0){
+                            System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore3[i]);
+                        }
+                        if( i == 1){
+                            System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore3[i]);
+                        }
+                        if( i == 2){
+                            System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore3[i]);
+                        }
+                    }
+                    pause();
+                }
+            }
+        }
+        System.out.println("\nEach Player has (Grand Bank):");
+        for (int i = 0; i < 3; i++) {
+            playerScore[i] += playerScore3[i];
+            if( i == 0){
+                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore[i]);
+            }
+            if( i == 1){
+                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore[i]);
+            }
+            if( i == 2){
+                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore[i]);
+            }
+        }
+        currentPlayer = changePlayer(currentPlayer);
+
+        // Extra Round
+        for(int i = 0; i<playerScore.length; i++ ){
+            for(int j = i+1; j<playerScore.length; j++){
+                if(playerScore[i]> playerScore[j]){
+                    int score = playerScore[i];
+                    playerScore[i] = playerScore[j];
+                    playerScore[j] = score;
+                }
+            }
+        }
+        int highestScore1 = playerScore[playerScore.length-1];
+        int highestScore2  = playerScore[playerScore.length-2];
+
+        if (highestScore1 == highestScore2) {
+            while (!condition4) {
+                System.out.print("\nAvailable letters - \n"); // Valid & Entries Character
+                for (String availableLetter : availableLetters4) {
+                    System.out.print(availableLetter);
+                }
+                System.out.print("\n\nHere is the puzzle (Quote) :\n"); // Game Start up
+
+                // puzzle phrase being obscured
+                for (String s : quotePuzzle) {
+                    System.out.print(s);
+                    System.out.print(" ");
+                }
+                System.out.print("\n\nWheel Options:\n");
+                for (String wheel : wheelsDisplay) {
+                    System.out.print(wheel + " ");
+                }
+                System.out.println("\n\nPlayer " + currentPlayer + "\": would you like to Spin (S) or Guess (G) the puzzle or buy a (V) Vowel?");
+
+                boolean invalidEntries = true;
+                while (invalidEntries) {
+                    choice = scan.next().toUpperCase();
+                    if (choice.equals("S") || choice.equals("G") || choice.equals("V")) {
+                        invalidEntries = false;
+                    } else {
+                        System.out.println("Invalid Choice! Enter Spin (S), Guess (G) or buy a (V) Vowel");
+                    }
+                }
+                // Wheel Value
+                if (choice.equals("S")) {
+                    int letterMatch = 0;
+                    spin = random.nextInt(22);
+                    spin = spin + 1;
+                    if (spin > 0 && spin <= 21) {
+                        value = wheels[(spin - 1)];
+                        System.out.println("You landed on $" + value + ".");
+                        System.out.println("Select your letter from the available letters from above: ");
+                        letterSelection = scan.nextLine().toUpperCase();
+                        letterSelection = scan.nextLine().toUpperCase();
+
+                        for (int i=0; i < availableLetters4.length; i++){
+                            if (letterSelection.equalsIgnoreCase(availableLetters4[i])){
+                                availableLetters4[i] = "_";
+                            }
+                        }
+
+                        // Clear Text
+                        for (int i = 0; i < quoteText.length; i++) {
+                            if (letterSelection.equalsIgnoreCase(quoteText[i])) {
+                                letterMatch++;
+                                quotePuzzle[i] = quoteText[i];
+                            }
+                        }
+                        if (letterMatch > 0) {
+                            System.out.println("There is/are " + letterMatch + " " + letterSelection + "'s in the puzzle.");
+                            moneyEarned = letterMatch * value;
+                            totalMoney = moneyEarned + playerScore4[(currentPlayer - 1)];
+                            playerScore4[(currentPlayer - 1)] = totalMoney;
+                            System.out.println("You earned $" + moneyEarned);
+                            pause();
+                        }
+                        if (letterMatch == 0) {
+                            System.out.println("There are no " + letterSelection + "'s in the puzzle.");
+                            currentPlayer = changePlayer(currentPlayer);
+
+                            System.out.println("\nEach Player has (Bonus Round):");
+                            for (int i = 0; i < 3; i++) {
+                                if( i == 0){
+                                    System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore4[i]);
+                                }
+                                if( i == 1){
+                                    System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore4[i]);
+                                }
+                                if( i == 2){
+                                    System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore4[i]);
+                                }
+                            }
+                            pause();
+                        }
+                    }
+                    if (spin == 22) {
+                        System.out.println("You went bankrupt!");
+                        playerScore4[(currentPlayer - 1)] = 0;
+                        currentPlayer = changePlayer(currentPlayer);
+
+                        System.out.println("\nEach Player has (Bonus Round):");
+                        for (int i = 0; i < 3; i++) {
+                            System.out.println("Player " + (i + 1) + ": $" + playerScore4[i]);
+                        }
+                        pause();
+                    }
+                    if (spin == 0) {
+                        System.out.println("You lose a turn!");
+                        currentPlayer = changePlayer(currentPlayer);
+
+                        System.out.println("\nEach Player has (Bonus Round):");
+                        for (int i = 0; i < 3; i++) {
+                            if( i == 0){
+                                System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore4[i]);
+                            }
+                            if( i == 1){
+                                System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore4[i]);
+                            }
+                            if( i == 2){
+                                System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore4[i]);
+                            }
+                        }
+                        pause();
+                    }
+                }
+                if (choice.equals("V")) {
+                    if (playerScore4[currentPlayer - 1] < 100) {
+                        System.out.println("Not enough Money");
+                        pause();
+                    } else {
+                        int letterMatch = 0;
+                        System.out.println(" Please type a vowel: ");
+                        letterSelection = scan.nextLine().toUpperCase();
+                        letterSelection = scan.nextLine().toUpperCase();
+
+                        if (letterSelection.equals("A") || letterSelection.equals("E") || letterSelection.equals("I") || letterSelection.equals("O") || letterSelection.equals("U")) {
+
+                            for (int i=0; i < availableLetters4.length; i++){
+                                if (letterSelection.equalsIgnoreCase(availableLetters4[i])){
+                                    availableLetters4[i] = "_";
+                                }
+                            }
+
+                            for (int i = 0; i < quoteText.length; i++) {
+                                if (letterSelection.equalsIgnoreCase(quoteText[i])) {
+                                    letterMatch++;
+                                    quotePuzzle[i] = quoteText[i];
+                                }
+                            }
+                            if (letterMatch > 0) {
+                                System.out.println("There is/are " + letterMatch + " " + letterSelection + "'s in the puzzle.");
+                                moneyEarned = moneyEarned - 100;
+                                totalMoney = moneyEarned;
+                                playerScore4[(currentPlayer - 1)] = totalMoney;
+                                System.out.println("You have $" + moneyEarned);
+
+                                System.out.println("\nEach Player has (Bonus Round):");
+                                for (int i = 0; i < 3; i++) {
+                                    if( i == 0){
+                                        System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore4[i]);
+                                    }
+                                    if( i == 1){
+                                        System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore4[i]);
+                                    }
+                                    if( i == 2){
+                                        System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore4[i]);
+                                    }
+                                }
+                                pause();
+                            }
+                            if (letterMatch == 0) {
+                                System.out.println("There are no " + letterSelection + "'s in the puzzle.");
+                                currentPlayer = changePlayer(currentPlayer);
+
+                                System.out.println("\nEach Player has (Bonus Round):");
+
+                                for (int i = 0; i < 3; i++) {
+                                    if( i == 0){
+                                        System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore4[i]);
+                                    }
+                                    if( i == 1){
+                                        System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore4[i]);
+                                    }
+                                    if( i == 2){
+                                        System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore4[i]);
+                                    }
+                                }
+                                pause();
+                            }
+                        } else {
+                            System.out.println(letterSelection + "'s not a Vowel");
+                        }
+                    }
+                }
+                if (choice.equals("G")) {
+                    System.out.println("Enter your guess: ");
+                    puzzleGuess = scan.nextLine().toUpperCase();
+                    puzzleGuess = scan.nextLine().toUpperCase();
+
+                    if (puzzleGuess.equalsIgnoreCase(quote)) {
+                        System.out.println("Congratulations, Player " + currentPlayer + " have won $" + totalMoney + "!");
+                        condition4 = true;
+                    } else {
+                        System.out.println("I'm sorry, that is not correct.");
+                        currentPlayer = changePlayer(currentPlayer);
+                        pause();
+                    }
+                }
+            }
+            System.out.println("\nEach Player has (Winner is with the most amount of money):");
+            for (int i = 0; i < 3; i++) {
+                playerScore[i] += playerScore4[i];
+                if( i == 0){
+                    System.out.println("Player " + (i + 1) +" (" + player1  + "): $" + playerScore[i]);
+                }
+                if( i == 1){
+                    System.out.println("Player " + (i + 1) +" (" + player2  + "): $" + playerScore[i]);
+                }
+                if( i == 2){
+                    System.out.println("Player " + (i + 1) +" (" + player3  + "): $" + playerScore[i]);
+                }
+            }
+            currentPlayer = changePlayer(currentPlayer);
+        }
+    }
+    public static int changePlayer(int currentPlayer){
+        if (currentPlayer == 1){
+            currentPlayer =2;
+        }else {
+            if (currentPlayer == 2){
+                currentPlayer =3;
+            }else {
+                if (currentPlayer == 3){
+                    currentPlayer =1;
+                }
+            }
+        }
+        return currentPlayer;
+    }
+    public static void pause(){
+        String e = "";
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Press enter to continue");
+        e = scan.nextLine();
+    }
+}
